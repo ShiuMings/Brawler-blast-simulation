@@ -69,3 +69,4 @@ plt.show()
 #     a += b[i]*(0.6501**(8-i))*0.2984*(9-i)+(0.6501**(9-i))
 # print(a)
 # test
+# test pulling
