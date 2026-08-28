@@ -9,11 +9,15 @@ choice_list = [5714, 2857, 1429]
 fragment_list = [6501, 2984, 357, 114, 44]
 fragment_occurence = [0]*18
 
+coin_upgrade = [20, 55, 130, 270, 560, 1040, 1840, 3090, 4965, 7765]
+pp_upgrade = [20, 50, 100, 180, 310, 520, 860, 1410, 2300, 3740]
+
 power_list = []
 gadget_list = []
 gear_list = []
 star_power_list = []
 hyper_list = []
+buffie_list = []
 
 iteration = 1000000
 
@@ -49,31 +53,42 @@ for i in range(iteration):
     gear = False
     star_power = False
     hyper = False
+    buffie = False
+
+    total_k = 0
+
     for k in outcome:
-        if k > 0:
+        if k > 0 and total_k + k <= 17:
+            total_k += k
+
             if k == 1:
                 if power_lvl >= 11:
-                    print("power overload 1")
+                    continue
+                    #print("power overload 1")
                 else:
                     power_lvl += 1
 
             elif k == 2:
-                if power_lvl >= 10 and gear and gadget:
-                    print("power overload 2")
 
+                item_choice2 = []
+                if power_lvl < 10:
+                    item_choice2.append("power")
+                if not gadget:
+                    item_choice2.append("gadget")
+                if not gear:
+                    item_choice2.append("gear")
+
+                if len(item_choice2) == 0:
+                    print("power overload 2")
                 else:
-                    exit = False
-                    while not exit:
-                        reward = random.randint(1,3)
-                        if reward == 1 and power_lvl < 10:
-                            power_lvl += 2
-                            exit = True
-                        elif reward == 2 and not gadget:
-                            gadget = True
-                            exit = True
-                        elif reward == 3 and not gear:
-                            gear = True
-                            exit = True
+                    result = random.choice(item_choice2)
+                    if result == "power":
+                        power_lvl += 2
+                    elif result == "gadget":
+                        gadget = True
+                    elif result == "gear":
+                        gear = True
+
 
             elif k == 3:
                 if power_lvl >= 9 and star_power:
@@ -88,6 +103,7 @@ for i in range(iteration):
 
 
             elif k == 4:
+                #Without buffie
                 if power_lvl >= 8 and hyper:
                     print("power_overload 4")
                 else:
@@ -97,18 +113,43 @@ for i in range(iteration):
                     else:
                         power_lvl += 4
 
+                #With buffie:
+                # item_choice4 = []
+                # if power_lvl < 8:
+                #     item_choice4.append("power")
+                # if not hyper:
+                #     item_choice4.append("hyper")
+                # if not buffie:
+                #     item_choice4.append("buffie")
+
+                # if len(item_choice4) == 0:
+                #     print("power overload 4")
+                # else:
+                #     result = random.choice(item_choice4)
+                #     if result == "power":
+                #         power_lvl += 4
+                #     elif result == "hyper":
+                #         hyper = True
+                #     elif result == "buffie":
+                #         buffie = True
+
+
+
+
+    # if total_k >= 15:
+    #     print(total_k)
+
     if power_lvl == 1:
-        power_lvl == 2
+        power_lvl = 2
     power_list.append(power_lvl)
     gadget_list.append(gadget)
     gear_list.append(gear)
     star_power_list.append(star_power)
     hyper_list.append(hyper)
+    buffie_list.append(buffie)
         
 
-
-    total_fragment = 0
-    total_fragment += sum(outcome)
+    total_fragment = sum(outcome)
     if total_fragment > 17:
         total_fragment = 17
     elif total_fragment == 0:
@@ -125,7 +166,14 @@ print("\n\n")
 # print(star_power_list)
 # print(hyper_list)
 
-print(sum(power_list)/iteration)
+coin = 0
+pp = 0
+#print(power_list)
+for i in power_list:
+    coin += coin_upgrade[i-2]
+    pp += pp_upgrade[i-2]
+print("Coin:", coin/iteration)
+print("Power point:", pp/iteration)
 
 count = 0
 for i in gadget_list:
@@ -151,11 +199,11 @@ for i in hyper_list:
         count += 1
 print("Hyper:", count/iteration)
 
-
-
-
-
-
+count = 0
+for i in buffie_list:
+    if i == True:
+        count += 1
+print("Buffie:", count/iteration)
 
 
 fragment_occurence = [m / iteration * 100 for m in fragment_occurence]
