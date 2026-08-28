@@ -104,34 +104,34 @@ for i in range(iteration):
 
             elif k == 4:
                 #Without buffie
-                if power_lvl >= 8 and hyper:
-                    print("power_overload 4")
-                else:
-                    reward = random.randint(1,2)
-                    if (reward == 1 and not hyper) or (reward == 2 and power_lvl >= 8):
-                        hyper = True
-                    else:
-                        power_lvl += 4
+                # if power_lvl >= 8 and hyper:
+                #     print("power_overload 4")
+                # else:
+                #     reward = random.randint(1,2)
+                #     if (reward == 1 and not hyper) or (reward == 2 and power_lvl >= 8):
+                #         hyper = True
+                #     else:
+                #         power_lvl += 4
 
                 #With buffie:
-                # item_choice4 = []
-                # if power_lvl < 8:
-                #     item_choice4.append("power")
-                # if not hyper:
-                #     item_choice4.append("hyper")
-                # if not buffie:
-                #     item_choice4.append("buffie")
+                item_choice4 = []
+                if power_lvl < 8:
+                    item_choice4.append("power")
+                if not hyper:
+                    item_choice4.append("hyper")
+                if not buffie:
+                    item_choice4.append("buffie")
 
-                # if len(item_choice4) == 0:
-                #     print("power overload 4")
-                # else:
-                #     result = random.choice(item_choice4)
-                #     if result == "power":
-                #         power_lvl += 4
-                #     elif result == "hyper":
-                #         hyper = True
-                #     elif result == "buffie":
-                #         buffie = True
+                if len(item_choice4) == 0:
+                    print("power overload 4")
+                else:
+                    result = random.choice(item_choice4)
+                    if result == "power":
+                        power_lvl += 4
+                    elif result == "hyper":
+                        hyper = True
+                    elif result == "buffie":
+                        buffie = True
 
 
 
@@ -151,6 +151,7 @@ for i in range(iteration):
 
     total_fragment = sum(outcome)
     if total_fragment > 17:
+        print("over 17")
         total_fragment = 17
     elif total_fragment == 0:
         total_fragment = 1
@@ -160,7 +161,7 @@ for i in range(iteration):
 #Post loop
 
 print("\n\n")
-#print(power_list)
+# print(power_list)
 # print(gadget_list)
 # print(gear_list)
 # print(star_power_list)
@@ -220,7 +221,7 @@ plt.bar(x+0.2, y1, 0.4)
 y2 = np.array(supercells_data)
 plt.bar(x-0.2, y2, 0.4)
 
-#plt.show()
+plt.show()
 
 
 # a = 0
